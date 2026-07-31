@@ -1,10 +1,19 @@
-function getImages(index) {
+// function getImages(index) {
+//     return /*html*/`
+//         <div id="image-container">
+//             <img class="image" id="img${index}" 
+//             src="media/${myimages[index].filename}" 
+//             onclick="highlightImage(${index})"
+//             alt="media/${myimages[index].title}">
+//         </div>`;
+// }
+
+function renderCard(pokemon) {
     return /*html*/`
         <div id="image-container">
-            <img class="image" id="img${index}" 
-            src="media/${myimages[index].filename}" 
-            onclick="highlightImage(${index})"
-            alt="media/${myimages[index].title}">
+            <p>${pokemon.name}</p>
+            <img class="image" 
+            src="${pokemon.picture}">
         </div>`;
 }
 

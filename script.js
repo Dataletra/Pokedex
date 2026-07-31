@@ -74,16 +74,6 @@ Vor-Navigationsbutton im Dialog
 */
 //#endregion
 
-let apiOffset = 0;
-let generalApiUrl = "https://pokeapi.co/api/v2/";
-const containerRef = document.getElementById("poke-container");
-function init() {
-
-    // call for loadingCircle();
-    //await fetch
-    // call to start rendering fetched data
-}
-
 //#region FOTOGRAM CODE
 /*
 let myimages = [{ title: "Moon", filename: "010.jpg" },
@@ -138,4 +128,90 @@ function closeHighlightImage() {
     dialogRef.classList.remove("open");
 }
     */
+//#endregion
+//#region script
+let apiOffset = 0;
+let apiLimit = 30;
+let generalPokemonUrl = "https://pokeapi.co/api/v2/";
+const pokeContainerRef = document.getElementById("poke-container");
+let pokemonList = [];
+
+async function init() {
+    await fetchPokemonlist(apiLimit, apiOffset);
+    console.log(pokemonList);
+
+    await fetchExactPokemon(pokemonList);
+
+    // call for loadingCircle();
+    //await fetch
+    // call to start rendering fetched data
+    renderImages();
+}
+/* function loadFromLocalStorage(){
+    LOOK THROUGH LOCAL STORAGE, IF NAME EXISTS, SKIP API CALL, IF NOT, DO API CALL
+}*/
+
+function renderImages() {
+    pokeContainerRef.innerHTML = "";
+    for (let index = 0; index < localStorage.length; index++) {
+        try {
+            let key = localStorage.key(index);
+            let rawData = localStorage.getItem(key);
+            let pokemon = JSON.parse(rawData);
+            pokeContainerRef.innerHTML += renderCard(pokemon);
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+}
+
+function saveToLocalStorage(pokemonName, data) {
+    localStorage.setItem(pokemonName, data);
+}
+
+async function fetchPokemonlist(limit = 30, offset = 1) {
+    let response = await fetch(`${generalPokemonUrl}/pokemon?limit=${limit}&offset=${offset}`);
+    let responseAsJson = await response.json();
+    responseAsJson.results.forEach((pokemon) => {
+        pokemonList.push({ "PokemonName": pokemon.name, "PokemonUrl": pokemon.url });
+        saveToLocalStorage(pokemon);
+    });
+}
+
+async function fetchExactPokemon(pokemonList) {
+    for (const pokemon of pokemonList) {
+        let response = await fetch(pokemon.PokemonUrl);
+        let responseAsJson = await response.json();
+        const pokemonId = responseAsJson.id;
+        const pokemonName = responseAsJson.species.name;
+        const pokemonPicture = responseAsJson.sprites.other['official-artwork'].front_shiny;
+        let pokemonTypes = [];
+        responseAsJson.types.forEach(pokiType => pokemonTypes.push(pokiType.type.name));
+        const pokemonHp = responseAsJson.stats[0].base_stat;
+        const pokemonAttack = responseAsJson.stats[1].base_stat;
+        const pokemonDefense = responseAsJson.stats[2].base_stat;
+        const pokemonSpecialDefense = responseAsJson.stats[3].base_stat;
+        const pokemonSpeed = responseAsJson.stats[4].base_stat;
+
+        const pokemonObject = {
+            name: pokemonName,
+            picture: pokemonPicture,
+            types: pokemonTypes,
+            hp: pokemonHp,
+            attack: pokemonAttack,
+            defense: pokemonDefense,
+            specialDefense: pokemonSpecialDefense,
+            speed: pokemonSpeed
+        };
+
+        localStorage.setItem(pokemonId, JSON.stringify(pokemonObject));
+    }
+}
+//         responseAsJson.results.forEach((pokemon) => {
+//             saveToLocalStorage(pokemon, responseAsJson);
+//         });
+function updateLocalStorage() {
+
+}
 //#endregion
