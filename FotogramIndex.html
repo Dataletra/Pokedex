@@ -3,10 +3,11 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Pokedex</title>
+		<title>Fotogram</title>
 		<link rel="stylesheet" href="style.css" />
 		<script defer src="script.js"></script>
 		<script defer src="TemplateFunctions.js"></script>
+
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -15,13 +16,14 @@
 		/>
 		<link rel="icon" type="image/x-icon" href="media/favico.ico" />
 	</head>
-	<body onload="init()">
+	<body onload="renderImages()">
 		<header>
 			<img alt="fotogram-logo" src="media/fotogram.png" class="header-logo" />
 			<h1 id="logo">Pokedex</h1>
 		</header>
 		<main>
-			<section id="poke-container"></section>
+			<h1 id="title">Your personal photo album</h1>
+			<section id="photo-container"></section>
 			<dialog id="photo-highlight"></dialog>
 		</main>
 		<footer>

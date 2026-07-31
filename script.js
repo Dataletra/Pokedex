@@ -74,6 +74,9 @@ Vor-Navigationsbutton im Dialog
 */
 //#endregion
 
+let apiOffset = 0;
+let generalApiUrl = "https://pokeapi.co/api/v2/";
+const containerRef = document.getElementById("poke-container");
 function init() {
 
     // call for loadingCircle();
