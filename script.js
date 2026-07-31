@@ -131,11 +131,11 @@ function closeHighlightImage() {
 //#endregion
 //#region script
 let apiOffset = 0;
-let apiLimit = 22;
+let apiLimit = 3;
 let generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
 let pokemonList = [];
-const uncollectedPokemon = [];
+let uncollectedPokemon = [];
 
 async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
@@ -154,6 +154,7 @@ function loadFromLocalStorage() {
 
     // LOOK THROUGH LOCAL STORAGE, IF NAME EXISTS, SKIP API CALL, IF NOT, DO API CALL
     let cachedNames = [];
+    let newfind = false;
     for (let index = 0; index < localStorage.length; index++) {
         try {
             let key = localStorage.key(index);
@@ -170,8 +171,11 @@ function loadFromLocalStorage() {
         } else {
             uncollectedPokemon.push(pokemon);
             console.log("NEW FIND:", pokemon.PokemonName);
-
+            newfind = true;
         }
+    }
+    if (newfind) {
+        fetchExactPokemon(uncollectedPokemon);
     }
 }
 
@@ -198,8 +202,10 @@ async function fetchPokemonlist(limit = 30, offset = 1) {
     });
 }
 
-async function fetchExactPokemon(pokemonList) {
-    for (const pokemon of pokemonList) {
+async function fetchExactPokemon(pokiList) {
+    console.log("FETCH EXACT ->" + pokiList.length);
+
+    for (const pokemon of pokiList) {
         let response = await fetch(pokemon.PokemonUrl);
         let responseAsJson = await response.json();
         const pokemonId = responseAsJson.id;
