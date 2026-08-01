@@ -131,7 +131,7 @@ function closeHighlightImage() {
 //#endregion
 //#region script
 let apiOffset = 0;
-let apiLimit = 3;
+let apiLimit = 10;
 let generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
 let pokemonList = [];
@@ -139,9 +139,8 @@ let uncollectedPokemon = [];
 
 async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
-    console.log(pokemonList);
-    loadFromLocalStorage();
-    await fetchExactPokemon(pokemonList);
+    await loadFromLocalStorage();
+
 
     // call for loadingCircle();
     //await fetch
@@ -149,12 +148,13 @@ async function init() {
 
     renderSmallPokiCards();
 }
-function loadFromLocalStorage() {
-    console.log("hi");
 
+async function loadFromLocalStorage() {
     // LOOK THROUGH LOCAL STORAGE, IF NAME EXISTS, SKIP API CALL, IF NOT, DO API CALL
+    console.log("loadFromLocalStorage");
+
     let cachedNames = [];
-    let newfind = false;
+    let newFind = false;
     for (let index = 0; index < localStorage.length; index++) {
         try {
             let key = localStorage.key(index);
@@ -171,15 +171,17 @@ function loadFromLocalStorage() {
         } else {
             uncollectedPokemon.push(pokemon);
             console.log("NEW FIND:", pokemon.PokemonName);
-            newfind = true;
+            newFind = true;
         }
     }
-    if (newfind) {
-        fetchExactPokemon(uncollectedPokemon);
+    if (newFind) {
+        console.log(uncollectedPokemon);
+        await fetchExactPokemon(uncollectedPokemon, newFind);
     }
 }
 
 function renderSmallPokiCards() {
+    console.log("RENDER STARTS");
     pokeContainerRef.innerHTML = "";
     for (let index = 0; index < localStorage.length; index++) {
         try {
@@ -193,7 +195,6 @@ function renderSmallPokiCards() {
     }
 }
 
-
 async function fetchPokemonlist(limit = 30, offset = 1) {
     let response = await fetch(`${generalPokemonUrl}/pokemon?limit=${limit}&offset=${offset}`);
     let responseAsJson = await response.json();
@@ -203,9 +204,8 @@ async function fetchPokemonlist(limit = 30, offset = 1) {
 }
 
 async function fetchExactPokemon(pokiList) {
-    console.log("FETCH EXACT ->" + pokiList.length);
-
     for (const pokemon of pokiList) {
+        console.log("FETCHING EXACT ->" + pokemon.PokemonName);
         let response = await fetch(pokemon.PokemonUrl);
         let responseAsJson = await response.json();
         const pokemonId = responseAsJson.id;
@@ -229,7 +229,6 @@ async function fetchExactPokemon(pokiList) {
             speed: pokemonSpeed,
             types: pokemonTypes
         };
-
         localStorage.setItem(pokemonId, JSON.stringify(pokemonObject));
     }
 }
