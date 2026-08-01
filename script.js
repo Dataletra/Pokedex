@@ -23,7 +23,7 @@ Werte der kleinen Pokemonkarte:
 
 [] load 20-40 pokemons
 
-[] on bottom of page have button "load more"
+[x] on bottom of page have button "load more"
 
 
 ----------------------------
@@ -38,7 +38,7 @@ Werte der kleinen Pokemonkarte:
 Kein-Treffer-Meldung (per JS ins DOM eingefügt)
 
 
-[]load-more-button
+[x]load-more-button
 "Load More"-Button
 
 
@@ -131,7 +131,7 @@ function closeHighlightImage() {
 //#endregion
 //#region script
 let apiOffset = 0;
-let apiLimit = 2;
+let apiLimit = 60;
 let pokemonWithinLocalStorage = 0;
 let generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");

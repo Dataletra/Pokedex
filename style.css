@@ -75,23 +75,23 @@ main {
 	flex-wrap: wrap;
 	gap: 30px;
 }
-
+#image-container {
+	border: #000000 solid 2px;
+	border-radius: 15px;
+	padding: 5px;
+	transition: all 0.2s ease-in-out;
+}
 .image {
 	height: 150px;
 	width: 150px;
 	object-fit: cover;
-	border: #124658 solid 2px;
-	border-radius: 15px;
 	transition: all 0.5s ease-in-out;
 }
-.image:hover {
-	height: 150px;
-	width: 150px;
-	object-fit: cover;
-	border: #1e728e solid 2px;
+#image-container:hover {
+	border: #b5c9d0 solid 2px;
 	border-radius: 15px;
 	transform: translateY(-5px);
-	transition: all 0.5s ease-in-out;
+	transition: all 0.2s ease-in-out;
 	cursor: pointer;
 }
 
