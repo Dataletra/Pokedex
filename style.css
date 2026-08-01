@@ -50,7 +50,19 @@ main {
 	flex-grow: 1;
 	align-content: center;
 }
-#photo-container {
+.fetch-more-button {
+	padding: 15px;
+	background-color: green;
+	border: #06171e;
+	border-radius: 10px;
+}
+.fetch-more-button:hover {
+	padding: 15px;
+	background-color: rgb(0, 185, 0);
+	border: #06171e;
+	border-radius: 10px;
+}
+#poke-container {
 	padding-inline: calc((100% - 1440px) / 2);
 	width: 80%;
 	height: fit-content;
