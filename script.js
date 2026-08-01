@@ -1,7 +1,7 @@
 //#region CHECKLIST
 
 /* 
-[] cards have different color background based on kind (fire, water etc.)
+[x] cards have different color background based on kind (fire, water etc.)
 
 [] background not scrollable when in selected view
 
@@ -14,12 +14,12 @@
 [] arrows like in fotogram to go to next pokemon
 
 Werte der kleinen Pokemonkarte:
-[] Name (Groß geschrieben!)
+[x] Name (Groß geschrieben!)
 [] Typ/en
-[] Bild des Pokemons
-[] Hintergrundfarbe passend zum Typ
-[] ID (optional)
-[] Die Karte hat einen Hovereffekt.
+[x] Bild des Pokemons
+[x] Hintergrundfarbe passend zum Typ
+[x] ID (optional)
+[x] Die Karte hat einen Hovereffekt.
 
 [] load 20-40 pokemons
 
@@ -27,10 +27,10 @@ Werte der kleinen Pokemonkarte:
 
 
 ----------------------------
-[]content
+[x]content
 <main>-Tag (Haupt-Container der Seite)
 
-[]search-input
+[x]search-input
 <input>-Feld der Suchleiste
 
 
