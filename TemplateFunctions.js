@@ -10,7 +10,7 @@
 
 function renderCard(pokemon) {
     return /*html*/`
-        <div id="image-container" class="bg_${pokemon.types[0]}">
+        <div id="image-container" class="poke-card bg_${pokemon.types[0]}" data-name="${pokemon.name.toLowerCase()}">
             <p>${pokemon.name.toUpperCase()}</p>
             <img class="image" 
             src="${pokemon.picture}">

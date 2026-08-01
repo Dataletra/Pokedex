@@ -14,7 +14,9 @@ body {
 	background-color: #06171e;
 	font-family: Figtree;
 }
-
+.d_none {
+	display: none;
+}
 header {
 	padding-inline: calc((100% - 1440px) / 2);
 	background-color: #09212a;
@@ -25,6 +27,10 @@ header {
 	flex-direction: row;
 	align-items: center;
 	justify-content: left;
+}
+#search-field {
+	padding: 5px;
+	color: #000000;
 }
 
 .header-logo {

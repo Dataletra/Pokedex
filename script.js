@@ -241,4 +241,19 @@ function fetchMore() {
     apiOffset += pokemonWithinLocalStorage;
     init();
 }
+
+function searchFieldTrigger() {
+    console.log("SEARCH RENDER STARTS");
+
+    let searchFieldContentRef = document.getElementById("search-field").value.toLowerCase();
+    const imageContainerRef = document.querySelectorAll(".poke-card");
+
+    imageContainerRef.forEach(card => {
+        if (!card.dataset.name.includes(searchFieldContentRef)) {
+            card.classList.add("d_none");
+        } else {
+            card.classList.remove("d_none");
+        }
+    });
+}
 //#endregion
