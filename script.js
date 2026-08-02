@@ -71,6 +71,13 @@ Zurück-Navigationsbutton im Dialog
 []next-button
 Vor-Navigationsbutton im Dialog
 
+[] Replace DA Watermark
+
+[] Replace fotogram logo
+
+[] clean up media folder
+
+[] put css/js files into assets folder
 */
 //#endregion
 
