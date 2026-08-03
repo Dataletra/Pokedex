@@ -159,8 +159,8 @@ check lerntagebuch für how - screenshot there from DA video
 
 async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
-    await loadFromLocalStorage();
-
+    ALL_POKEMON = await loadFromLocalStorage();
+    searchedPokemon = ALL_POKEMON;
 
     // call for loadingCircle();
     //await fetch
@@ -201,27 +201,7 @@ async function loadFromLocalStorage() {
     }
 }
 
-function renderSmallPokiCards() {
-    console.log("RENDER STARTS");
-    pokeContainerRef.innerHTML = "";
-    for (let index = 0; index < localStorage.length; index++) {
-        try {
-            let key = localStorage.key(index);
-            let rawData = localStorage.getItem(key);
-            let pokemon = JSON.parse(rawData);
-            if (pokemon.types.length == 2) {
-                pokeContainerRef.innerHTML += renderCardDoubleType(pokemon, index);
-            } else if (pokemon.types.length == 1) {
-                pokeContainerRef.innerHTML += renderCardSingleType(pokemon, index);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    renderTypes();
-}
-
-// function SEARCrenderSmallPokiCards() {
+// function renderSmallPokiCards() {
 //     console.log("RENDER STARTS");
 //     pokeContainerRef.innerHTML = "";
 //     for (let index = 0; index < localStorage.length; index++) {
@@ -240,6 +220,27 @@ function renderSmallPokiCards() {
 //     }
 //     renderTypes();
 // }
+
+function renderSmallPokiCards() {
+    console.log("RENDER STARTS");
+    pokeContainerRef.innerHTML = "";
+    for (let index = 0; index < searchedPokemon.length; index++) {
+        try {
+            let key = localStorage.key(index);
+            let rawData = localStorage.getItem(key);
+            let pokemon = JSON.parse(rawData);
+            if (pokemon.types.length == 2) {
+                pokeContainerRef.innerHTML += renderCardDoubleType(pokemon, index);
+            } else if (pokemon.types.length == 1) {
+                pokeContainerRef.innerHTML += renderCardSingleType(pokemon, index);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    renderTypes();
+}
+
 
 function renderTypes() {
     const pokemonTypeArr =
@@ -319,6 +320,21 @@ function searchFieldTrigger() {
         }
     });
 }
+
+// function searchFieldTrigger() {
+//     console.log("SEARCH RENDER STARTS");
+
+//     let searchFieldContentRef = document.getElementById("search-field").value.toLowerCase();
+//     const imageContainerRef = document.querySelectorAll(".poke-card");
+
+//     imageContainerRef.forEach(card => {
+//         if (!card.dataset.name.includes(searchFieldContentRef)) {
+//             card.classList.add("d_none");
+//         } else {
+//             card.classList.remove("d_none");
+//         }
+//     });
+// }
 
 function highlightPokemon(index) {
     updateModal(index);
