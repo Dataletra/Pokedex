@@ -146,6 +146,14 @@ const dialogRef = document.getElementById("pokemon-highlight");
 let pokemonList = [];
 let uncollectedPokemon = [];
 const ALL_POKEMON = [];
+const POKEMON_TYPE_ARR =
+    ["Normal", "Fire", "Water",
+        "Grass", "Electric", "Ice",
+        "Fighting", "Poison", "Ground",
+        "Flying", "Psychic", "Bug",
+        "Rock", "Ghost", "Dragon",
+        "Steel", "Fairy", "Dark"
+    ];
 let searchedPokemon = [];
 
 /*TODO
@@ -159,19 +167,20 @@ check lerntagebuch für how - screenshot there from DA video
 
 async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
-    ALL_POKEMON = await loadFromLocalStorage();
-    searchedPokemon = ALL_POKEMON;
+    await updateLocalStorage();
+    // searchedPokemon = ALL_POKEMON;
 
     // call for loadingCircle();
     //await fetch
     // call to start rendering fetched data
-
+    searchedPokemon = ALL_POKEMON;
+    loadFromLocalStorage();
     renderSmallPokiCards();
 }
 
-async function loadFromLocalStorage() {
+async function updateLocalStorage() {
     // LOOK THROUGH LOCAL STORAGE, IF NAME EXISTS, SKIP API CALL, IF NOT, DO API CALL
-    console.log("loadFromLocalStorage");
+    console.log("updateLocalStorage");
 
     let cachedNames = [];
     let newFind = false;
@@ -221,18 +230,28 @@ async function loadFromLocalStorage() {
 //     renderTypes();
 // }
 
+function loadFromLocalStorage() {
+    for (let index = 0; index < localStorage.length; index++) {
+        try {
+            let key = localStorage.key(index);
+            let rawData = localStorage.getItem(key);
+            let pokemon = JSON.parse(rawData);
+            ALL_POKEMON.push(pokemon);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
 function renderSmallPokiCards() {
     console.log("RENDER STARTS");
     pokeContainerRef.innerHTML = "";
     for (let index = 0; index < searchedPokemon.length; index++) {
         try {
-            let key = localStorage.key(index);
-            let rawData = localStorage.getItem(key);
-            let pokemon = JSON.parse(rawData);
-            if (pokemon.types.length == 2) {
-                pokeContainerRef.innerHTML += renderCardDoubleType(pokemon, index);
-            } else if (pokemon.types.length == 1) {
-                pokeContainerRef.innerHTML += renderCardSingleType(pokemon, index);
+            if (searchedPokemon[index].types.length == 2) {
+                pokeContainerRef.innerHTML += renderCardDoubleType(searchedPokemon[index], index);
+            } else if (searchedPokemon[index].types.length == 1) {
+                pokeContainerRef.innerHTML += renderCardSingleType(searchedPokemon[index], index);
             }
         } catch (error) {
             console.error(error);
@@ -243,16 +262,7 @@ function renderSmallPokiCards() {
 
 
 function renderTypes() {
-    const pokemonTypeArr =
-        ["Normal", "Fire", "Water",
-            "Grass", "Electric", "Ice",
-            "Fighting", "Poison", "Ground",
-            "Flying", "Psychic", "Bug",
-            "Rock", "Ghost", "Dragon",
-            "Steel", "Fairy", "Dark"
-        ];
-
-    for (type of pokemonTypeArr) {
+    for (type of POKEMON_TYPE_ARR) {
         document.querySelectorAll(`[data-pokeclass*="${type.toLowerCase()}"]`).forEach(element => {
             element.innerHTML = `${type}`;
         });
@@ -282,8 +292,6 @@ async function fetchExactPokemon(pokiList) {
         const pokemonSpeed = responseAsJson.stats[4].base_stat;
         let pokemonTypes = [];
         responseAsJson.types.forEach(pokiType => pokemonTypes.push(pokiType.type.name));
-        //hat das pokemon bei dem key name den geleichen wert wie von der value der searchbar?
-        // wenn ja - packe in gesuchtes
 
         const pokemonObject = {
             name: pokemonName,
@@ -303,38 +311,26 @@ function fetchMore() {
     pokemonList = [];
     uncollectedPokemon = []; //Dont remove, otherwise it recursively fetches every pokemon after initial load
     apiOffset += pokemonWithinLocalStorage;
+    document.getElementById("search-field").value = "";
     init();
 }
 
 function searchFieldTrigger() {
+    searchedPokemon = [];
     console.log("SEARCH RENDER STARTS");
-
     let searchFieldContentRef = document.getElementById("search-field").value.toLowerCase();
     const imageContainerRef = document.querySelectorAll(".poke-card");
-
-    imageContainerRef.forEach(card => {
-        if (!card.dataset.name.includes(searchFieldContentRef)) {
-            card.classList.add("d_none");
-        } else {
-            card.classList.remove("d_none");
+    for (let index = 0; index < ALL_POKEMON.length; index++) {
+        if (ALL_POKEMON[index].name.includes(searchFieldContentRef)) {
+            searchedPokemon.push(ALL_POKEMON[index])
         }
-    });
+    }
+    if (searchedPokemon.length > 0) {
+        renderSmallPokiCards()
+    } else {
+        pokeContainerRef.innerHTML = "";
+    }
 }
-
-// function searchFieldTrigger() {
-//     console.log("SEARCH RENDER STARTS");
-
-//     let searchFieldContentRef = document.getElementById("search-field").value.toLowerCase();
-//     const imageContainerRef = document.querySelectorAll(".poke-card");
-
-//     imageContainerRef.forEach(card => {
-//         if (!card.dataset.name.includes(searchFieldContentRef)) {
-//             card.classList.add("d_none");
-//         } else {
-//             card.classList.remove("d_none");
-//         }
-//     });
-// }
 
 function highlightPokemon(index) {
     updateModal(index);
@@ -348,22 +344,19 @@ function closePokemon(index) {
 
 function updateModal(index) {
     try {
-        let key = localStorage.key(index);
-        let rawData = localStorage.getItem(key);
-        let pokemon = JSON.parse(rawData);
-        dialogRef.innerHTML = getModal(index, pokemon);
+        dialogRef.innerHTML = getModal(index, searchedPokemon[index]);
     } catch (error) {
         console.error(error);
     }
 }
 
 function incrementModal(index) {
-    if (index == localStorage.length - 1) index = -1;
+    if (index == searchedPokemon.length - 1) index = -1;
     updateModal(index + 1);
 }
 
 function decrementModal(index) {
-    if (index == 0) index = localStorage.length;
+    if (index == 0) index = searchedPokemon.length;
     updateModal(index - 1);
 }
 

@@ -71,7 +71,7 @@ function getModal(index, pokemon) {
             </div>
 		<footer class="photo-highlight-footer">
 			<button  onclick="decrementModal(${index})"><img class="button-left" src="./media/button.png"></button>
-			<p>${index + 1}/${localStorage.length}</p>
+			<p>${index + 1}/${searchedPokemon.length}</p>
 			<button  onclick="incrementModal(${index})"><img class="button-right" src="./media/button.png"></button>
 		</footer>
     </div>`;
