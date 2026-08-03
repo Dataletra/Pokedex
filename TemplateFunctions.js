@@ -8,14 +8,30 @@
 //         </div>`;
 // }
 
-function renderCard(pokemon) {
+function renderCardSingleType(pokemon, index) {
     return /*html*/`
-        <div id="image-container" class="poke-card bg_${pokemon.types[0]}" data-name="${pokemon.name.toLowerCase()}">
+        <div id="image-container-${index}" class="poke-card bg_${pokemon.types[0]}" data-name="${pokemon.name.toLowerCase()}">
             <p>${pokemon.name.toUpperCase()}</p>
             <img class="image" 
             src="${pokemon.picture}">
+            <div class="type-container">
+                <p class="first-type" data-pokeClass="${pokemon.types[0]}"></p>
+            </div>
         </div>`;
 }
+function renderCardDoubleType(pokemon, index) {
+    return /*html*/`
+        <div id="image-container-${index}" class="poke-card bg_${pokemon.types[0]}" data-name="${pokemon.name.toLowerCase()}">
+            <p>${pokemon.name.toUpperCase()}</p>
+            <img class="image" 
+            src="${pokemon.picture}">
+            <div class="type-container">
+                <p class="first-type" data-pokeClass="${pokemon.types[0]}"></p>
+                <p class="second-type" data-pokeClass="${pokemon.types[1]}"></p>
+            </div>
+        </div>`;
+}
+
 
 function getModal(index) {
     return /*html*/`

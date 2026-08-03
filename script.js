@@ -15,7 +15,7 @@
 
 Werte der kleinen Pokemonkarte:
 [x] Name (Groß geschrieben!)
-[] Typ/en
+[x] Typ/en
 [x] Bild des Pokemons
 [x] Hintergrundfarbe passend zum Typ
 [x] ID (optional)
@@ -140,7 +140,7 @@ function closeHighlightImage() {
 let apiOffset = 0;
 let apiLimit = 60;
 let pokemonWithinLocalStorage = 0;
-let generalPokemonUrl = "https://pokeapi.co/api/v2/";
+const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
 let pokemonList = [];
 let uncollectedPokemon = [];
@@ -197,10 +197,32 @@ function renderSmallPokiCards() {
             let key = localStorage.key(index);
             let rawData = localStorage.getItem(key);
             let pokemon = JSON.parse(rawData);
-            pokeContainerRef.innerHTML += renderCard(pokemon);
+            if (pokemon.types.length == 2) {
+                pokeContainerRef.innerHTML += renderCardDoubleType(pokemon);
+            } else if (pokemon.types.length == 1) {
+                pokeContainerRef.innerHTML += renderCardSingleType(pokemon);
+            }
         } catch (error) {
             console.error(error);
         }
+    }
+    renderTypes();
+}
+
+function renderTypes() {
+    const pokemonTypeArr =
+        ["Normal", "Fire", "Water",
+            "Grass", "Electric", "Ice",
+            "Fighting", "Poison", "Ground",
+            "Flying", "Psychic", "Bug",
+            "Rock", "Ghost", "Dragon",
+            "Steel", "Fairy", "Dark"
+        ];
+
+    for (type of pokemonTypeArr) {
+        document.querySelectorAll(`[data-pokeclass*="${type.toLowerCase()}"]`).forEach(element => {
+            element.innerHTML = `${type}`;
+        });
     }
 }
 
