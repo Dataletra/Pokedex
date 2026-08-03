@@ -3,15 +3,15 @@
 /* 
 [x] cards have different color background based on kind (fire, water etc.)
 
-[] background not scrollable when in selected view
+[x] background not scrollable when in selected view
 
 [] selected view closes when clicked outside of it (done through a transparent overlay, basically a layer on top )
 
-[] if clicked on card in general view, it opens up (selected view)
+[x] if clicked on card in general view, it opens up (selected view)
 
 []within selected view show things like hp/ attack / defence, etc.
 
-[] arrows like in fotogram to go to next pokemon
+[x] arrows like in fotogram to go to next pokemon
 
 Werte der kleinen Pokemonkarte:
 [x] Name (Groß geschrieben!)
@@ -21,7 +21,7 @@ Werte der kleinen Pokemonkarte:
 [x] ID (optional)
 [x] Die Karte hat einen Hovereffekt.
 
-[] load 20-40 pokemons
+[x] load 20-40 pokemons
 
 [x] on bottom of page have button "load more"
 
@@ -42,7 +42,7 @@ Kein-Treffer-Meldung (per JS ins DOM eingefügt)
 "Load More"-Button
 
 
-[]dialog
+[x]dialog
 <dialog>-Element (das Modal/Overlay)
 
 
@@ -50,25 +50,25 @@ Kein-Treffer-Meldung (per JS ins DOM eingefügt)
 <button> jeder einzelnen Pokémon-Card
 
 
-[]card-image
+[x]card-image
 <img> innerhalb der Pokémon-Card
 
 
-[]overlay-pokemon-name
+[x]overlay-pokemon-name
 Haupt-<div> des Dialogs (enthält Namen und Inhalt)
 
 
-[]close-dialog-button
+[x]close-dialog-button
 Schließen-Button im Dialog
 
 
-[]dialog-image
+[x]dialog-image
 <img> innerhalb des Dialogs
 
-[]prev-button
+[x]prev-button
 Zurück-Navigationsbutton im Dialog
 
-[]next-button
+[x]next-button
 Vor-Navigationsbutton im Dialog
 
 [] Replace DA Watermark
@@ -138,10 +138,11 @@ function closeHighlightImage() {
 //#endregion
 //#region script
 let apiOffset = 0;
-let apiLimit = 60;
+let apiLimit = 20;
 let pokemonWithinLocalStorage = 0;
 const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
+const dialogRef = document.getElementById("pokemon-highlight");
 let pokemonList = [];
 let uncollectedPokemon = [];
 
@@ -198,9 +199,9 @@ function renderSmallPokiCards() {
             let rawData = localStorage.getItem(key);
             let pokemon = JSON.parse(rawData);
             if (pokemon.types.length == 2) {
-                pokeContainerRef.innerHTML += renderCardDoubleType(pokemon);
+                pokeContainerRef.innerHTML += renderCardDoubleType(pokemon, index);
             } else if (pokemon.types.length == 1) {
-                pokeContainerRef.innerHTML += renderCardSingleType(pokemon);
+                pokeContainerRef.innerHTML += renderCardSingleType(pokemon, index);
             }
         } catch (error) {
             console.error(error);
@@ -284,5 +285,41 @@ function searchFieldTrigger() {
             card.classList.remove("d_none");
         }
     });
+}
+
+function highlightPokemon(index) {
+    updateModal(index);
+    dialogRef.classList.add("open");
+    dialogRef.showModal()
+}
+function closePokemon(index) {
+    dialogRef.classList.remove("open");
+    dialogRef.close()
+}
+
+function updateModal(index) {
+    try {
+        let key = localStorage.key(index);
+        let rawData = localStorage.getItem(key);
+        let pokemon = JSON.parse(rawData);
+        dialogRef.innerHTML = getModal(index, pokemon);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function incrementModal(index) {
+    if (index == localStorage.length - 1) index = -1;
+    updateModal(index + 1);
+}
+
+function decrementModal(index) {
+    if (index == 0) index = localStorage.length;
+    updateModal(index - 1);
+}
+
+function closeHighlightImage() {
+    dialogRef.close()
+    dialogRef.classList.remove("open");
 }
 //#endregion

@@ -122,7 +122,7 @@ main {
 	cursor: pointer;
 }
 
-#photo-highlight.open {
+#pokemon-highlight.open {
 	width: 60dvh;
 	height: 70dvh;
 	position: fixed;
@@ -134,6 +134,12 @@ main {
 	footer {
 		background-color: #06171e;
 	}
+}
+
+#pokemon-highlight::backdrop {
+	overscroll-behavior: none;
+	height: 100%;
+	overflow: hidden;
 }
 
 .dialog-content {
