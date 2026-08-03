@@ -108,6 +108,22 @@ main {
 		padding: 5px;
 	}
 }
+.poke-stats {
+	display: flex;
+	flex-direction: column;
+	min-height: 50%;
+	table {
+		display: flex;
+		flex-direction: row;
+		width: 60%;
+	}
+	.table-rating {
+		text-align: right;
+	}
+	.table-stat {
+		text-align: left;
+	}
+}
 .image {
 	height: 150px;
 	width: 150px;
@@ -124,7 +140,7 @@ main {
 
 #pokemon-highlight.open {
 	width: 60dvh;
-	height: 70dvh;
+	height: 90dvh;
 	position: fixed;
 	margin: auto;
 	background-color: #06171e;
@@ -145,14 +161,14 @@ main {
 .dialog-content {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 	height: 100%;
 }
 
 .highlight-image {
-	max-width: 450px;
-	max-height: 350px;
+	max-width: 350px;
+	max-height: 250px;
 	object-fit: cover;
 	border: #124658 solid 2px;
 }
@@ -204,6 +220,7 @@ main {
 	gap: 10px;
 }
 .photo-highlight-footer {
+	margin-top: auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

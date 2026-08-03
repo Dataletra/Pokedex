@@ -145,6 +145,17 @@ const pokeContainerRef = document.getElementById("poke-container");
 const dialogRef = document.getElementById("pokemon-highlight");
 let pokemonList = [];
 let uncollectedPokemon = [];
+const ALL_POKEMON = [];
+let searchedPokemon = [];
+
+/*TODO
+we cant render out of localstorage anymore - 
+instead we have to use searchedpokemon, we render all from ALL_pokemon array
+and we render searched pokemon from searchedPokemon array
+otherwise, if  we enter highlight view whilst we're in search, 
+and we look for the next 'obj' it shows a not searched pokemon
+check lerntagebuch für how - screenshot there from DA video
+*/
 
 async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
@@ -210,6 +221,26 @@ function renderSmallPokiCards() {
     renderTypes();
 }
 
+// function SEARCrenderSmallPokiCards() {
+//     console.log("RENDER STARTS");
+//     pokeContainerRef.innerHTML = "";
+//     for (let index = 0; index < localStorage.length; index++) {
+//         try {
+//             let key = localStorage.key(index);
+//             let rawData = localStorage.getItem(key);
+//             let pokemon = JSON.parse(rawData);
+//             if (pokemon.types.length == 2) {
+//                 pokeContainerRef.innerHTML += renderCardDoubleType(pokemon, index);
+//             } else if (pokemon.types.length == 1) {
+//                 pokeContainerRef.innerHTML += renderCardSingleType(pokemon, index);
+//             }
+//         } catch (error) {
+//             console.error(error);
+//         }
+//     }
+//     renderTypes();
+// }
+
 function renderTypes() {
     const pokemonTypeArr =
         ["Normal", "Fire", "Water",
@@ -250,6 +281,8 @@ async function fetchExactPokemon(pokiList) {
         const pokemonSpeed = responseAsJson.stats[4].base_stat;
         let pokemonTypes = [];
         responseAsJson.types.forEach(pokiType => pokemonTypes.push(pokiType.type.name));
+        //hat das pokemon bei dem key name den geleichen wert wie von der value der searchbar?
+        // wenn ja - packe in gesuchtes
 
         const pokemonObject = {
             name: pokemonName,

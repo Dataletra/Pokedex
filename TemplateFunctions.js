@@ -45,6 +45,30 @@ function getModal(index, pokemon) {
         <img class="highlight-image" id="img${index}" 
             src="${pokemon.picture}"
             alt="${pokemon.name}">
+            <div class="poke-stats">
+                <table>
+                    <tr>
+                        <td class="table-stat">HP</td>
+                        <td class="table-rating">${pokemon.hp}</td>
+                    </tr>
+                    <tr>
+                        <td class="table-stat">Attack</td>
+                        <td class="table-rating">${pokemon.attack}</td>
+                    </tr>
+                    <tr>
+                        <td class="table-stat">Defense</td>
+                        <td class="table-rating">${pokemon.defense}</td>
+                    </tr>
+                    <tr>
+                        <td class="table-stat">Special Defense</td>
+                        <td class="table-rating">${pokemon.specialDefense}</td>
+                    </tr>
+                    <tr>
+                        <td class="table-stat">Speed</td>
+                        <td class="table-rating">${pokemon.Speed}</td>
+                    </tr>
+                </table>
+            </div>
 		<footer class="photo-highlight-footer">
 			<button  onclick="decrementModal(${index})"><img class="button-left" src="./media/button.png"></button>
 			<p>${index + 1}/${localStorage.length}</p>
