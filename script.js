@@ -143,8 +143,7 @@ function closeHighlightImage() {
 //#endregion
 //#region script
 let apiOffset = 0;
-let apiLimit = 30;
-let pokemonWithinLocalStorage = 0;
+let apiLimit = 10;
 const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
 const dialogRef = document.getElementById("pokemon-highlight");
@@ -167,28 +166,27 @@ function start() {
 
 async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
-    await updateLocalStorage();
+    const cachedNames = getCachedNames();
+    await checkLocalStorageDupplicates(cachedNames);
     // call for loadingCircle();
     searchedPokemon = ALL_POKEMON;
     loadFromLocalStorage();
     renderSmallPokiCards();
 }
 
-async function updateLocalStorage() {
+function getCachedNames() {
     let cachedNames = [];
-    pokemonWithinLocalStorage = 0;
     for (let index = 0; index < localStorage.length; index++) {
         try {
             let key = localStorage.key(index);
             let rawData = localStorage.getItem(key);
             let pokemon = JSON.parse(rawData);
             cachedNames.push(pokemon.name);
-            pokemonWithinLocalStorage++
         } catch (error) {
             console.error(error);
         }
     }
-    await checkLocalStorageDupplicates(cachedNames)
+    return cachedNames;
 }
 
 async function checkLocalStorageDupplicates(cachedNames) {
@@ -310,6 +308,7 @@ function resetSearch() {
     document.getElementById("search-field").value = "";
     searchFieldTrigger();
 }
+
 function highlightPokemon(index) {
     updateModal(index);
     dialogRef.classList.add("open");
