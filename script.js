@@ -143,7 +143,7 @@ function closeHighlightImage() {
 //#endregion
 //#region script
 let apiOffset = 0;
-let apiLimit = 10;
+let apiLimit = 2;
 let pokemonWithinLocalStorage = 0;
 const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
@@ -169,13 +169,14 @@ async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
     await updateLocalStorage();
     // call for loadingCircle();
-    loadFromLocalStorage();
     searchedPokemon = ALL_POKEMON;
+    loadFromLocalStorage();
     renderSmallPokiCards();
 }
 
-function updateLocalStorage() {
+async function updateLocalStorage() {
     let cachedNames = [];
+    pokemonWithinLocalStorage = 0;
     for (let index = 0; index < localStorage.length; index++) {
         try {
             let key = localStorage.key(index);
@@ -187,7 +188,7 @@ function updateLocalStorage() {
             console.error(error);
         }
     }
-    checkLocalStorageDupplicates(cachedNames)
+    await checkLocalStorageDupplicates(cachedNames)
 }
 
 async function checkLocalStorageDupplicates(cachedNames) {
@@ -208,6 +209,7 @@ async function checkLocalStorageDupplicates(cachedNames) {
 }
 
 function loadFromLocalStorage() {
+    ALL_POKEMON.length = 0;
     for (let index = 0; index < localStorage.length; index++) {
         try {
             let key = localStorage.key(index);
@@ -242,7 +244,7 @@ function renderTypes() {
     }
 }
 
-async function fetchPokemonlist(limit = 30, offset = 1) {
+async function fetchPokemonlist(limit = 30, offset = 0) {
     const response = await fetch(`${generalPokemonUrl}/pokemon?limit=${limit}&offset=${offset}`);
     const responseAsJson = await response.json();
     responseAsJson.results.forEach((pokemon) => {
@@ -280,7 +282,9 @@ function createPkmnObjFromJson(jsonObj, allTypes) {
 function fetchMore() {
     pokemonList = [];
     uncollectedPokemon = []; //Dont remove, otherwise it recursively fetches every pokemon after initial load
-    apiOffset += pokemonWithinLocalStorage;
+    if (apiOffset < localStorage.length) {
+        apiOffset = localStorage.length
+    } else apiOffset += apiLimit;
     document.getElementById("search-field").value = "";
     init();
 }
