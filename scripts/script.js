@@ -1,95 +1,6 @@
-//#region CHECKLIST
-
-/* 
-[x] cards have different color background based on kind (fire, water etc.)
-
-[x] background not scrollable when in selected view
-
-[x] selected view closes when clicked outside of it (done through a transparent overlay, basically a layer on top )
-
-[x] if clicked on card in general view, it opens up (selected view)
-
-[x]within selected view show things like hp/ attack / defence, etc.
-
-[x] arrows like in fotogram to go to next pokemon
-
-Werte der kleinen Pokemonkarte:
-[x] Name (Groß geschrieben!)
-[x] Typ/en
-[x] Bild des Pokemons
-[x] Hintergrundfarbe passend zum Typ
-[x] ID (optional)
-[x] Die Karte hat einen Hovereffekt.
-
-[x] load 20-40 pokemons
-
-[x] on bottom of page have button "load more"
-
-
-----------------------------
-[x]content
-<main>-Tag (Haupt-Container der Seite)
-
-[x]search-input
-<input>-Feld der Suchleiste
-
-
-[x]not-found
-Kein-Treffer-Meldung (per JS ins DOM eingefügt)
-
-
-[x]load-more-button
-"Load More"-Button
-
-
-[x]dialog
-<dialog>-Element (das Modal/Overlay)
-
-
-[x]card
-<button> jeder einzelnen Pokémon-Card
-
-
-[x]card-image
-<img> innerhalb der Pokémon-Card
-
-
-[x]overlay-pokemon-name
-Haupt-<div> des Dialogs (enthält Namen und Inhalt)
-
-
-[x]close-dialog-button
-Schließen-Button im Dialog
-
-
-[x]dialog-image
-<img> innerhalb des Dialogs
-
-[x]prev-button
-Zurück-Navigationsbutton im Dialog
-
-[x]next-button
-Vor-Navigationsbutton im Dialog
-
-[] Replace DA Watermark
-
-[] Replace fotogram logo
-
-[] clean up media folder
-
-[] put css/js files into assets folder
-[x] make button to reset searchbar next to load more (easy)
-[x] hover effect on small cards needs fixing
-[x] cursor pointer on small cards
-[] auslagern von big code (14 zeilen)
-[x] rheinfolge fixen
-*/
-//#endregion
-
-
 //#region script
 let apiOffset = 0;
-let apiLimit = 60;
+let apiLimit = 30;
 const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
 const btnContainerRef = document.getElementById("button-container");
@@ -145,10 +56,8 @@ async function checkLocalStorageDupplicates(cachedNames) {
     let newFind = false;
     for (const pokemon of pokemonList) {
         if (cachedNames.includes(pokemon.PokemonName)) {
-            console.log("Found in cache, skipping API:", pokemon.PokemonName);
         } else {
             uncollectedPokemon.push(pokemon);
-            console.log("NEW FIND:", pokemon.PokemonName);
             newFind = true;
         }
     }
@@ -169,7 +78,6 @@ function loadFromLocalStorage() {
 }
 
 function renderSmallPokiCards() {
-    console.log("RENDER STARTS");
     pokeContainerRef.innerHTML = "";
     for (let index = 0; index < searchedPokemon.length; index++) {
         if (searchedPokemon[index].types.length === 2) {
@@ -199,7 +107,6 @@ async function fetchPokemonlist(limit = 30, offset = 0) {
 
 async function fetchExactPokemon(pokiList) {
     for (const pokemon of pokiList) {
-        console.log("FETCHING EXACT ->" + pokemon.PokemonName);
         const response = await fetch(pokemon.PokemonUrl);
         const responseAsJson = await response.json();
         const pokemonTypes = [];
@@ -236,7 +143,6 @@ function fetchMore() {
 
 function searchFieldTrigger() {
     searchedPokemon = [];
-    console.log("SEARCH RENDER STARTS");
     const searchFieldContentRef = document.getElementById("search-field").value.toLowerCase();
     const imageContainerRef = document.querySelectorAll(".poke-card");
     for (let index = 0; index < ALL_POKEMON.length; index++) {
@@ -246,9 +152,7 @@ function searchFieldTrigger() {
     }
     if (searchedPokemon.length > 0) {
         renderSmallPokiCards()
-    } else {
-        pokeContainerRef.innerHTML = "Not found";
-    }
+    } else pokeContainerRef.innerHTML = "Not found";
 }
 
 function resetSearch() {

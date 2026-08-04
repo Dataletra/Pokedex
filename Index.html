@@ -4,22 +4,22 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Pokedex</title>
-		<link rel="stylesheet" href="style.css" />
-		<link rel="stylesheet" href="backgroundColors.css" />
-		<link rel="stylesheet" href="loadingSpinner.css" />
-		<script src="script.js" defer></script>
-		<script defer src="TemplateFunctions.js"></script>
+		<link rel="stylesheet" href="./assets/style.css" />
+		<link rel="stylesheet" href="./assets/backgroundColors.css" />
+		<link rel="stylesheet" href="./assets/loadingSpinner.css" />
+		<script src="./scripts/script.js" defer></script>
+		<script defer src="./scripts/TemplateFunctions.js"></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
 			rel="stylesheet"
 		/>
-		<link rel="icon" type="image/x-icon" href="media/favicon.ico" />
+		<link rel="icon" type="image/x-icon" href="./media/favicon.ico" />
 	</head>
 	<body>
 		<header>
-			<img alt="Pokemon-logo" src="media/pokemon-icon.png" class="header-logo" />
+			<img alt="Pokemon-logo" src="./media/pokemon-icon.png" class="header-logo" />
 			<h1 id="logo">Pokedex</h1>
 			<input type="text" id="search-field" oninput="searchFieldTrigger()" />
 		</header>
@@ -29,7 +29,6 @@
 				<button class="fetch-more-button" onclick="fetchMore()">Fetch more</button>
 				<button class="fetch-more-button" onclick="resetSearch()">Reset</button>
 			</div>
-
 			<dialog closedby="any" id="pokemon-highlight"></dialog>
 		</main>
 		<footer>
