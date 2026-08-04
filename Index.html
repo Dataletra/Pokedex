@@ -6,7 +6,7 @@
 		<title>Pokedex</title>
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="backgroundColors.css" />
-
+		<link rel="stylesheet" href="loadingSpinner.css" />
 		<script src="script.js" defer></script>
 		<script defer src="TemplateFunctions.js"></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,22 +15,25 @@
 			href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
 			rel="stylesheet"
 		/>
-		<link rel="icon" type="image/x-icon" href="media/favico.ico" />
+		<link rel="icon" type="image/x-icon" href="media/favicon.ico" />
 	</head>
 	<body>
 		<header>
-			<img alt="fotogram-logo" src="media/fotogram.png" class="header-logo" />
+			<img alt="Pokemon-logo" src="media/pokemon-icon.png" class="header-logo" />
 			<h1 id="logo">Pokedex</h1>
 			<input type="text" id="search-field" oninput="searchFieldTrigger()" />
 		</header>
 		<main>
 			<section id="poke-container"></section>
-			<button class="fetch-more-button" onclick="fetchMore()">Fetch more</button>
-			<button class="fetch-more-button" onclick="resetSearch()">Reset</button>
+			<div id="button-container">
+				<button class="fetch-more-button" onclick="fetchMore()">Fetch more</button>
+				<button class="fetch-more-button" onclick="resetSearch()">Reset</button>
+			</div>
+
 			<dialog closedby="any" id="pokemon-highlight"></dialog>
 		</main>
 		<footer>
-			<img src="media/DA_watermark.png" alt="developer akademie logo" class="DA-logo" />
+			<img alt="Pokemon-logo" src="media/pokemon-icon.png" class="DA-logo" />
 			<p class="footer-p">© 2026 Dataletra</p>
 		</footer>
 	</body>

@@ -34,7 +34,7 @@ Werte der kleinen Pokemonkarte:
 <input>-Feld der Suchleiste
 
 
-[]not-found
+[x]not-found
 Kein-Treffer-Meldung (per JS ins DOM eingefügt)
 
 
@@ -46,7 +46,7 @@ Kein-Treffer-Meldung (per JS ins DOM eingefügt)
 <dialog>-Element (das Modal/Overlay)
 
 
-[]card
+[x]card
 <button> jeder einzelnen Pokémon-Card
 
 
@@ -78,9 +78,9 @@ Vor-Navigationsbutton im Dialog
 [] clean up media folder
 
 [] put css/js files into assets folder
-[] make button to reset searchbar next to load more (easy)
-[] hover effect on small cards needs fixing
-[] cursor pointer on small cards
+[x] make button to reset searchbar next to load more (easy)
+[x] hover effect on small cards needs fixing
+[x] cursor pointer on small cards
 [] auslagern von big code (14 zeilen)
 [x] rheinfolge fixen
 */
@@ -89,9 +89,10 @@ Vor-Navigationsbutton im Dialog
 
 //#region script
 let apiOffset = 0;
-let apiLimit = 10;
+let apiLimit = 60;
 const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
+const btnContainerRef = document.getElementById("button-container");
 const dialogRef = document.getElementById("pokemon-highlight");
 let pokemonList = [];
 let uncollectedPokemon = [];
@@ -111,14 +112,20 @@ function start() {
 }
 
 async function init() {
+    showLoadingSpinner();
     await fetchPokemonlist(apiLimit, apiOffset);
     const cachedNames = getCachedNames();
     let newFind = checkLocalStorageDupplicates(cachedNames);
     if (newFind) await fetchExactPokemon(uncollectedPokemon, newFind);
-    // call for loadingCircle();
     searchedPokemon = ALL_POKEMON;
     loadFromLocalStorage();
     renderSmallPokiCards();
+    btnContainerRef.classList.remove("d_none");
+}
+
+function showLoadingSpinner() {
+    btnContainerRef.classList.add("d_none");
+    pokeContainerRef.innerHTML = `<span class="loader"></span>`
 }
 
 function getCachedNames() {

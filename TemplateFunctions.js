@@ -21,9 +21,9 @@ function renderCardDoubleType(pokemon, index) {
                 <p class="first-type" data-pokeClass="${pokemon.types[0]}"></p>
                 <p class="second-type" data-pokeClass="${pokemon.types[1]}"></p>
             </div>
-        </div>`;
+        </div>
+        `;
 }
-
 
 function getModal(index, pokemon) {
     return /*html*/`

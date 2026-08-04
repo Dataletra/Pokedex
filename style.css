@@ -5,6 +5,7 @@
 	position: relative;
 	color: white;
 }
+
 html,
 body {
 	height: 100dvh;
@@ -14,9 +15,11 @@ body {
 	background-color: #06171e;
 	font-family: Figtree;
 }
+
 .d_none {
 	display: none !important;
 }
+
 header {
 	padding-inline: calc((100% - 1440px) / 2);
 	background-color: #09212a;
@@ -28,8 +31,10 @@ header {
 	align-items: center;
 	justify-content: left;
 }
+
 #search-field {
 	padding: 5px;
+	margin: 20px;
 	color: #000000;
 }
 
@@ -38,7 +43,9 @@ header {
 	align-self: center;
 	align-items: center;
 	margin-left: 90px;
+	margin-right: 20px;
 }
+
 #title {
 	margin-top: 5dvh;
 	color: white;
@@ -56,18 +63,25 @@ main {
 	flex-grow: 1;
 	align-content: center;
 }
+
+#button-container {
+	margin-bottom: 50px;
+}
+
 .fetch-more-button {
 	padding: 15px;
 	background-color: green;
 	border: #06171e;
 	border-radius: 10px;
 }
+
 .fetch-more-button:hover {
 	padding: 15px;
 	background-color: rgb(0, 185, 0);
 	border: #06171e;
 	border-radius: 10px;
 }
+
 #poke-container {
 	padding-inline: calc((100% - 1440px) / 2);
 	width: 80%;
@@ -81,6 +95,7 @@ main {
 	flex-wrap: wrap;
 	gap: 30px;
 }
+
 .poke-card {
 	border: #000000 solid 2px;
 	border-radius: 15px;
@@ -89,6 +104,7 @@ main {
 	display: flex;
 	flex-direction: column;
 }
+
 .type-container {
 	display: flex;
 	flex-direction: row;
@@ -108,29 +124,54 @@ main {
 		padding: 5px;
 	}
 }
+
 .poke-stats {
 	display: flex;
 	flex-direction: column;
-	min-height: 30%;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	padding: 12px;
+	border-radius: 8px;
+
 	table {
-		display: flex;
-		flex-direction: row;
-		width: 60%;
+		width: 50%;
+		border-collapse: collapse;
 	}
-	.table-rating {
-		text-align: right;
+
+	tr {
+		border-bottom: 1px solid #eee;
+		&:last-child {
+			border-bottom: none;
+		}
 	}
+
+	td {
+		padding: 8px 4px;
+		font-size: 14px;
+	}
+
 	.table-stat {
 		text-align: left;
+		font-weight: bold;
+		color: white;
+	}
+
+	.table-rating {
+		text-align: right;
+		font-weight: bold;
+		color: whitesmoke;
 	}
 }
+
 .image {
 	height: 150px;
 	width: 150px;
 	object-fit: cover;
 	transition: all 0.5s ease-in-out;
 }
-#image-container:hover {
+
+.poke-card:hover {
 	border: #b5c9d0 solid 2px;
 	border-radius: 15px;
 	transform: translateY(-5px);
@@ -170,7 +211,6 @@ main {
 	max-width: 350px;
 	max-height: 250px;
 	object-fit: cover;
-	border: #124658 solid 2px;
 }
 @media screen and (max-width: 565px) {
 	#title {
@@ -196,6 +236,18 @@ main {
 @media screen and (max-width: 450px) {
 	.highlight-image {
 		max-width: 280px;
+	}
+	header {
+		flex-direction: column;
+		min-height: 120px;
+		justify-content: flex-end;
+	}
+	.header-logo {
+		margin: 0;
+	}
+	#search-field {
+		margin: 0;
+		margin-bottom: 10px;
 	}
 }
 /* max-width not functional */
