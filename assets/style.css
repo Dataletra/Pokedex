@@ -133,30 +133,25 @@ main {
 	width: 100%;
 	padding: 12px;
 	border-radius: 8px;
-
 	table {
 		width: 50%;
 		border-collapse: collapse;
 	}
-
 	tr {
 		border-bottom: 1px solid #eee;
 		&:last-child {
 			border-bottom: none;
 		}
 	}
-
 	td {
 		padding: 8px 4px;
 		font-size: 14px;
 	}
-
 	.table-stat {
 		text-align: left;
 		font-weight: bold;
 		color: white;
 	}
-
 	.table-rating {
 		text-align: right;
 		font-weight: bold;
@@ -212,11 +207,11 @@ main {
 	max-height: 250px;
 	object-fit: cover;
 }
+
 @media screen and (max-width: 565px) {
 	#title {
 		font-size: 3rem;
 	}
-
 	.highlight-image {
 		max-width: 400px;
 	}
@@ -233,6 +228,7 @@ main {
 		border: #124658 solid 2px;
 	}
 }
+
 @media screen and (max-width: 450px) {
 	.highlight-image {
 		max-width: 280px;
@@ -250,6 +246,7 @@ main {
 		margin-bottom: 10px;
 	}
 }
+
 /* max-width not functional */
 @media screen and (max-width: 370px) {
 	#title {
@@ -260,6 +257,7 @@ main {
 		border: #124658 solid 2px;
 	}
 }
+
 .photo-highlight-header {
 	display: flex;
 	flex-direction: row;
@@ -271,6 +269,7 @@ main {
 	}
 	gap: 10px;
 }
+
 .photo-highlight-footer {
 	margin-top: auto;
 	display: flex;
@@ -309,12 +308,14 @@ footer {
 	height: 40px;
 	background-color: #06171e;
 }
+
 .button-left {
 	width: 40px;
 	height: 40px;
 	transform: rotate(180deg);
 	background-color: #06171e;
 }
+
 button {
 	background: none;
 	color: inherit;
@@ -324,6 +325,7 @@ button {
 	cursor: pointer;
 	outline: inherit;
 }
+
 button:focus-visible {
 	outline: 1px solid #1e728e;
 	outline-offset: 4px;
@@ -334,8 +336,8 @@ button:focus-visible {
 .button-close {
 	margin-right: 30px;
 }
-.DA-logo {
-	padding-top: 20px;
 
-	height: 45px;
+.footer-logo {
+	padding-top: 20px;
+	height: 60px;
 }

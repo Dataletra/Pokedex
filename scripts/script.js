@@ -1,12 +1,8 @@
 //#region script
-let apiOffset = 0;
-let apiLimit = 30;
 const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
 const btnContainerRef = document.getElementById("button-container");
 const dialogRef = document.getElementById("pokemon-highlight");
-let pokemonList = [];
-let uncollectedPokemon = [];
 const ALL_POKEMON = [];
 const POKEMON_TYPE_ARR =
     ["Normal", "Fire", "Water",
@@ -16,6 +12,10 @@ const POKEMON_TYPE_ARR =
         "Rock", "Ghost", "Dragon",
         "Steel", "Fairy", "Dark"
     ];
+const API_LIMIT = 30;
+let apiOffset = 0;
+let pokemonList = [];
+let uncollectedPokemon = [];
 let searchedPokemon = [];
 
 function start() {
@@ -24,9 +24,9 @@ function start() {
 
 async function init() {
     showLoadingSpinner();
-    await fetchPokemonlist(apiLimit, apiOffset);
+    await fetchPokemonlist(API_LIMIT, apiOffset);
     const cachedNames = getCachedNames();
-    let newFind = checkLocalStorageDupplicates(cachedNames);
+    const newFind = checkLocalStorageDupplicates(cachedNames);
     if (newFind) await fetchExactPokemon(uncollectedPokemon, newFind);
     searchedPokemon = ALL_POKEMON;
     loadFromLocalStorage();
@@ -136,7 +136,7 @@ function fetchMore() {
     uncollectedPokemon = []; //Dont remove, otherwise it recursively fetches every pokemon after initial load
     if (apiOffset < localStorage.length) {
         apiOffset = localStorage.length
-    } else apiOffset += apiLimit;
+    } else apiOffset += API_LIMIT;
     document.getElementById("search-field").value = "";
     init();
 }
