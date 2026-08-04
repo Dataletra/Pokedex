@@ -5,11 +5,11 @@
 
 [x] background not scrollable when in selected view
 
-[] selected view closes when clicked outside of it (done through a transparent overlay, basically a layer on top )
+[x] selected view closes when clicked outside of it (done through a transparent overlay, basically a layer on top )
 
 [x] if clicked on card in general view, it opens up (selected view)
 
-[]within selected view show things like hp/ attack / defence, etc.
+[x]within selected view show things like hp/ attack / defence, etc.
 
 [x] arrows like in fotogram to go to next pokemon
 
@@ -78,6 +78,11 @@ Vor-Navigationsbutton im Dialog
 [] clean up media folder
 
 [] put css/js files into assets folder
+[] make button to reset searchbar next to load more (easy)
+[] hover effect on small cards needs fixing
+[] cursor pointer on small cards
+[] auslagern von big code (14 zeilen)
+[x] rheinfolge fixen
 */
 //#endregion
 
@@ -138,7 +143,7 @@ function closeHighlightImage() {
 //#endregion
 //#region script
 let apiOffset = 0;
-let apiLimit = 20;
+let apiLimit = 10;
 let pokemonWithinLocalStorage = 0;
 const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
@@ -156,34 +161,21 @@ const POKEMON_TYPE_ARR =
     ];
 let searchedPokemon = [];
 
-/*TODO
-we cant render out of localstorage anymore - 
-instead we have to use searchedpokemon, we render all from ALL_pokemon array
-and we render searched pokemon from searchedPokemon array
-otherwise, if  we enter highlight view whilst we're in search, 
-and we look for the next 'obj' it shows a not searched pokemon
-check lerntagebuch für how - screenshot there from DA video
-*/
+function start() {
+    init();
+}
 
 async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
     await updateLocalStorage();
-    // searchedPokemon = ALL_POKEMON;
-
     // call for loadingCircle();
-    //await fetch
-    // call to start rendering fetched data
-    searchedPokemon = ALL_POKEMON;
     loadFromLocalStorage();
+    searchedPokemon = ALL_POKEMON;
     renderSmallPokiCards();
 }
 
-async function updateLocalStorage() {
-    // LOOK THROUGH LOCAL STORAGE, IF NAME EXISTS, SKIP API CALL, IF NOT, DO API CALL
-    console.log("updateLocalStorage");
-
+function updateLocalStorage() {
     let cachedNames = [];
-    let newFind = false;
     for (let index = 0; index < localStorage.length; index++) {
         try {
             let key = localStorage.key(index);
@@ -195,6 +187,11 @@ async function updateLocalStorage() {
             console.error(error);
         }
     }
+    checkLocalStorageDupplicates(cachedNames)
+}
+
+async function checkLocalStorageDupplicates(cachedNames) {
+    let newFind = false;
     for (const pokemon of pokemonList) {
         if (cachedNames.includes(pokemon.PokemonName)) {
             console.log("Found in cache, skipping API:", pokemon.PokemonName);
@@ -210,26 +207,6 @@ async function updateLocalStorage() {
     }
 }
 
-// function renderSmallPokiCards() {
-//     console.log("RENDER STARTS");
-//     pokeContainerRef.innerHTML = "";
-//     for (let index = 0; index < localStorage.length; index++) {
-//         try {
-//             let key = localStorage.key(index);
-//             let rawData = localStorage.getItem(key);
-//             let pokemon = JSON.parse(rawData);
-//             if (pokemon.types.length == 2) {
-//                 pokeContainerRef.innerHTML += renderCardDoubleType(pokemon, index);
-//             } else if (pokemon.types.length == 1) {
-//                 pokeContainerRef.innerHTML += renderCardSingleType(pokemon, index);
-//             }
-//         } catch (error) {
-//             console.error(error);
-//         }
-//     }
-//     renderTypes();
-// }
-
 function loadFromLocalStorage() {
     for (let index = 0; index < localStorage.length; index++) {
         try {
@@ -237,6 +214,7 @@ function loadFromLocalStorage() {
             let rawData = localStorage.getItem(key);
             let pokemon = JSON.parse(rawData);
             ALL_POKEMON.push(pokemon);
+            ALL_POKEMON.sort((a, b) => a.id - b.id)
         } catch (error) {
             console.error(error);
         }
@@ -247,19 +225,14 @@ function renderSmallPokiCards() {
     console.log("RENDER STARTS");
     pokeContainerRef.innerHTML = "";
     for (let index = 0; index < searchedPokemon.length; index++) {
-        try {
-            if (searchedPokemon[index].types.length == 2) {
-                pokeContainerRef.innerHTML += renderCardDoubleType(searchedPokemon[index], index);
-            } else if (searchedPokemon[index].types.length == 1) {
-                pokeContainerRef.innerHTML += renderCardSingleType(searchedPokemon[index], index);
-            }
-        } catch (error) {
-            console.error(error);
+        if (searchedPokemon[index].types.length === 2) {
+            pokeContainerRef.innerHTML += renderCardDoubleType(searchedPokemon[index], index);
+        } else if (searchedPokemon[index].types.length === 1) {
+            pokeContainerRef.innerHTML += renderCardSingleType(searchedPokemon[index], index);
         }
     }
     renderTypes();
 }
-
 
 function renderTypes() {
     for (type of POKEMON_TYPE_ARR) {
@@ -270,8 +243,8 @@ function renderTypes() {
 }
 
 async function fetchPokemonlist(limit = 30, offset = 1) {
-    let response = await fetch(`${generalPokemonUrl}/pokemon?limit=${limit}&offset=${offset}`);
-    let responseAsJson = await response.json();
+    const response = await fetch(`${generalPokemonUrl}/pokemon?limit=${limit}&offset=${offset}`);
+    const responseAsJson = await response.json();
     responseAsJson.results.forEach((pokemon) => {
         pokemonList.push({ "PokemonName": pokemon.name, "PokemonUrl": pokemon.url });
     });
@@ -280,30 +253,27 @@ async function fetchPokemonlist(limit = 30, offset = 1) {
 async function fetchExactPokemon(pokiList) {
     for (const pokemon of pokiList) {
         console.log("FETCHING EXACT ->" + pokemon.PokemonName);
-        let response = await fetch(pokemon.PokemonUrl);
-        let responseAsJson = await response.json();
+        const response = await fetch(pokemon.PokemonUrl);
+        const responseAsJson = await response.json();
+        const pokemonTypes = [];
         const pokemonId = responseAsJson.id;
-        const pokemonName = responseAsJson.species.name;
-        const pokemonPicture = responseAsJson.sprites.other['official-artwork'].front_shiny;
-        const pokemonHp = responseAsJson.stats[0].base_stat;
-        const pokemonAttack = responseAsJson.stats[1].base_stat;
-        const pokemonDefense = responseAsJson.stats[2].base_stat;
-        const pokemonSpecialDefense = responseAsJson.stats[3].base_stat;
-        const pokemonSpeed = responseAsJson.stats[4].base_stat;
-        let pokemonTypes = [];
         responseAsJson.types.forEach(pokiType => pokemonTypes.push(pokiType.type.name));
-
-        const pokemonObject = {
-            name: pokemonName,
-            picture: pokemonPicture,
-            hp: pokemonHp,
-            attack: pokemonAttack,
-            defense: pokemonDefense,
-            specialDefense: pokemonSpecialDefense,
-            speed: pokemonSpeed,
-            types: pokemonTypes
-        };
+        const pokemonObject = createPkmnObjFromJson(responseAsJson, pokemonTypes);
         localStorage.setItem(pokemonId, JSON.stringify(pokemonObject));
+    }
+}
+
+function createPkmnObjFromJson(jsonObj, allTypes) {
+    return {
+        id: jsonObj.id,
+        name: jsonObj.species.name,
+        picture: jsonObj.sprites.other['official-artwork'].front_shiny,
+        hp: jsonObj.stats[0].base_stat,
+        attack: jsonObj.stats[1].base_stat,
+        defense: jsonObj.stats[2].base_stat,
+        specialDefense: jsonObj.stats[3].base_stat,
+        speed: jsonObj.stats[4].base_stat,
+        types: allTypes
     }
 }
 
@@ -318,7 +288,7 @@ function fetchMore() {
 function searchFieldTrigger() {
     searchedPokemon = [];
     console.log("SEARCH RENDER STARTS");
-    let searchFieldContentRef = document.getElementById("search-field").value.toLowerCase();
+    const searchFieldContentRef = document.getElementById("search-field").value.toLowerCase();
     const imageContainerRef = document.querySelectorAll(".poke-card");
     for (let index = 0; index < ALL_POKEMON.length; index++) {
         if (ALL_POKEMON[index].name.includes(searchFieldContentRef)) {
@@ -337,6 +307,7 @@ function highlightPokemon(index) {
     dialogRef.classList.add("open");
     dialogRef.showModal()
 }
+
 function closePokemon(index) {
     dialogRef.classList.remove("open");
     dialogRef.close()
@@ -364,4 +335,6 @@ function closeHighlightImage() {
     dialogRef.close()
     dialogRef.classList.remove("open");
 }
+
+start();
 //#endregion
