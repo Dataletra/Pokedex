@@ -167,7 +167,8 @@ function start() {
 async function init() {
     await fetchPokemonlist(apiLimit, apiOffset);
     const cachedNames = getCachedNames();
-    await checkLocalStorageDupplicates(cachedNames);
+    let newFind = checkLocalStorageDupplicates(cachedNames);
+    if (newFind) await fetchExactPokemon(uncollectedPokemon, newFind);
     // call for loadingCircle();
     searchedPokemon = ALL_POKEMON;
     loadFromLocalStorage();
@@ -182,9 +183,7 @@ function getCachedNames() {
             let rawData = localStorage.getItem(key);
             let pokemon = JSON.parse(rawData);
             cachedNames.push(pokemon.name);
-        } catch (error) {
-            console.error(error);
-        }
+        } catch (error) { console.error(error); }
     }
     return cachedNames;
 }
@@ -200,10 +199,7 @@ async function checkLocalStorageDupplicates(cachedNames) {
             newFind = true;
         }
     }
-    if (newFind) {
-        console.log(uncollectedPokemon);
-        await fetchExactPokemon(uncollectedPokemon, newFind);
-    }
+    return newFind;
 }
 
 function loadFromLocalStorage() {
@@ -215,9 +211,7 @@ function loadFromLocalStorage() {
             let pokemon = JSON.parse(rawData);
             ALL_POKEMON.push(pokemon);
             ALL_POKEMON.sort((a, b) => a.id - b.id)
-        } catch (error) {
-            console.error(error);
-        }
+        } catch (error) { console.error(error); }
     }
 }
 
