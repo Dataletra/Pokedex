@@ -181,7 +181,6 @@ main {
 
 #pokemon-highlight.open {
 	width: 60dvh;
-	height: 90dvh;
 	position: fixed;
 	margin: auto;
 	background-color: #06171e;
