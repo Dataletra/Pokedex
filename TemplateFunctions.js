@@ -1,13 +1,3 @@
-// function getImages(index) {
-//     return /*html*/`
-//         <div id="image-container">
-//             <img class="image" id="img${index}" 
-//             src="media/${myimages[index].filename}" 
-//             onclick="highlightImage(${index})"
-//             alt="media/${myimages[index].title}">
-//         </div>`;
-// }
-
 function renderCardSingleType(pokemon, index) {
     return /*html*/`
         <div id="image-container-${index}" class="poke-card bg_${pokemon.types[0]}" data-name="${pokemon.name.toLowerCase()}">
@@ -65,7 +55,7 @@ function getModal(index, pokemon) {
                     </tr>
                     <tr>
                         <td class="table-stat">Speed</td>
-                        <td class="table-rating">${pokemon.Speed}</td>
+                        <td class="table-rating">${pokemon.speed}</td>
                     </tr>
                 </table>
             </div>

@@ -143,7 +143,7 @@ function closeHighlightImage() {
 //#endregion
 //#region script
 let apiOffset = 0;
-let apiLimit = 2;
+let apiLimit = 30;
 let pokemonWithinLocalStorage = 0;
 const generalPokemonUrl = "https://pokeapi.co/api/v2/";
 const pokeContainerRef = document.getElementById("poke-container");
@@ -306,6 +306,10 @@ function searchFieldTrigger() {
     }
 }
 
+function resetSearch() {
+    document.getElementById("search-field").value = "";
+    searchFieldTrigger();
+}
 function highlightPokemon(index) {
     updateModal(index);
     dialogRef.classList.add("open");
