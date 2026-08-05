@@ -10,6 +10,7 @@ function renderCardSingleType(pokemon, index) {
             </div>
         </div>`;
 }
+
 function renderCardDoubleType(pokemon, index) {
     return /*html*/`
         <div id="image-container-${index}" class="poke-card bg_${pokemon.types[0]}" data-name="${pokemon.name.toLowerCase()}">
