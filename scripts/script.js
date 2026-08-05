@@ -32,6 +32,7 @@ async function init() {
     loadFromLocalStorage();
     renderSmallPokiCards();
     btnContainerRef.classList.remove("d_none");
+    await randomDegreeGenerator();
 }
 
 function showLoadingSpinner() {
@@ -161,6 +162,7 @@ function resetSearch() {
 }
 
 function highlightPokemon(index) {
+    dialogRef.className = "";
     updateModal(index);
     dialogRef.classList.add("open");
     dialogRef.showModal()
@@ -168,12 +170,17 @@ function highlightPokemon(index) {
 
 function closePokemon(index) {
     dialogRef.classList.remove("open");
+    dialogRef.className = "";
     dialogRef.close()
 }
 
 function updateModal(index) {
     try {
+        dialogRef.className = "";
+        dialogRef.classList.add("open");
         dialogRef.innerHTML = getModal(index, searchedPokemon[index]);
+        dialogRef.classList.add(`backdrop_${searchedPokemon[index].types[0]}`);
+        setRandomGradientAngle();
     } catch (error) {
         console.error(error);
     }
@@ -195,4 +202,6 @@ function closeHighlightImage() {
 }
 
 start();
+
+
 //#endregion

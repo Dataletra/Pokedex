@@ -1,0 +1,243 @@
+[class*="bg_"] {
+	background-size: 800% 800%;
+	animation: gradientShift 10s linear infinite;
+	--gradient-angle: 170deg;
+}
+
+.bg_fire {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(255, 0, 0),
+		rgb(255, 170, 0),
+		rgb(194, 0, 0),
+		rgb(255, 85, 0),
+		rgb(255, 170, 0),
+		rgb(255, 0, 0)
+	);
+	background-size: 400% 400%;
+	animation-duration: 13s;
+}
+
+.bg_water {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(0, 68, 255),
+		rgb(0, 145, 255),
+		rgb(14, 23, 203),
+		rgb(70, 215, 247),
+		rgb(0, 34, 136),
+		rgb(0, 145, 255)
+	);
+	animation-duration: 10s;
+}
+
+.bg_grass {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(17, 94, 46),
+		rgb(46, 139, 87),
+		rgb(0, 255, 102),
+		rgb(16, 56, 31),
+		rgb(56, 239, 125),
+		rgb(46, 139, 87)
+	);
+	animation-duration: 12s;
+}
+
+.bg_electric {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(255, 234, 0),
+		rgb(255, 153, 0),
+		rgb(255, 255, 255),
+		rgb(255, 234, 0),
+		rgb(212, 175, 55),
+		rgb(255, 255, 255)
+	);
+	animation:
+		gradientShift 10s linear infinite,
+		electricFlicker 2s ease-in-out infinite;
+}
+
+.bg_poison {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(75, 0, 130),
+		rgb(128, 0, 128),
+		rgb(170, 248, 0),
+		rgb(46, 0, 79),
+		rgb(155, 81, 224),
+		rgb(170, 248, 0)
+	);
+	animation-duration: 13s;
+}
+
+.bg_bug {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(76, 93, 0),
+		rgb(168, 157, 0),
+		rgb(141, 182, 0),
+		rgb(31, 43, 0),
+		rgb(205, 220, 57),
+		rgb(168, 157, 0)
+	);
+	animation-duration: 12s;
+}
+
+.bg_normal {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(220, 220, 220),
+		rgb(245, 245, 245),
+		rgb(176, 196, 222),
+		rgb(112, 128, 144),
+		rgb(255, 255, 255),
+		rgb(220, 220, 220)
+	);
+	animation-duration: 15s;
+}
+
+.bg_fairy {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(255, 105, 180),
+		rgb(234, 150, 255),
+		rgb(255, 192, 203),
+		rgb(255, 255, 255),
+		rgb(216, 112, 147),
+		rgb(234, 150, 255)
+	);
+	animation-duration: 16s;
+}
+
+.bg_ground {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(91, 69, 0),
+		rgb(160, 82, 45),
+		rgb(205, 133, 63),
+		rgb(58, 42, 0),
+		rgb(210, 180, 140),
+		rgb(91, 69, 0)
+	);
+	animation-duration: 19s;
+}
+
+.bg_fighting {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(139, 0, 0),
+		rgb(239, 147, 0),
+		rgb(211, 47, 47),
+		rgb(255, 69, 0),
+		rgb(92, 0, 0),
+		rgb(239, 147, 0)
+	);
+	animation-duration: 16s;
+}
+
+.bg_psychic {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgba(255, 0, 255, 0.6),
+		rgba(44, 2, 67, 0.9),
+		rgba(43, 0, 71, 0.95),
+		rgba(233, 91, 255, 0.8),
+		rgba(138, 43, 226, 0.9),
+		rgba(255, 0, 255, 0.6)
+	);
+	animation:
+		gradientShift 7s linear infinite,
+		psychicShadow 5s linear infinite;
+}
+
+.bg_rock {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(64, 64, 64),
+		rgb(103, 102, 104),
+		rgb(169, 169, 169),
+		rgb(43, 43, 43),
+		rgb(139, 133, 128),
+		rgb(103, 102, 104)
+	);
+	animation-duration: 14s;
+}
+
+.bg_ghost {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(26, 0, 51),
+		rgb(74, 0, 128),
+		rgb(239, 223, 255),
+		rgb(13, 0, 26),
+		rgb(138, 43, 226),
+		rgb(239, 223, 255)
+	);
+	animation:
+		gradientShift 8s linear infinite,
+		ghostGlow 4s ease-in-out infinite;
+}
+
+.bg_steel {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(112, 128, 144),
+		rgb(223, 242, 255),
+		rgb(255, 255, 255),
+		rgb(70, 130, 180),
+		rgb(176, 196, 222),
+		rgb(223, 242, 255)
+	);
+	animation-duration: 17s;
+}
+
+.bg_dark {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(0, 0, 0),
+		rgb(20, 49, 53),
+		rgb(47, 79, 79),
+		rgb(10, 10, 10),
+		rgb(28, 61, 66),
+		rgb(20, 49, 53)
+	);
+	animation-duration: 9s;
+}
+
+.bg_ice {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(0, 191, 255),
+		rgb(135, 206, 235),
+		rgb(255, 255, 255),
+		rgb(0, 229, 255),
+		rgb(176, 224, 230),
+		rgb(255, 255, 255)
+	);
+	animation-duration: 15s;
+}
+
+.bg_dragon {
+	background-image: linear-gradient(
+		var(--gradient-angle),
+		rgb(75, 0, 130),
+		rgb(177, 76, 76),
+		rgb(128, 0, 0),
+		rgb(31, 0, 51),
+		rgb(220, 20, 60),
+		rgb(177, 76, 76)
+	);
+	animation-duration: 17s;
+}
+
+.bg_normal p,
+.bg_poison p,
+.bg_water p,
+.bg_ghost p,
+.bg_steel p,
+.bg_ice p,
+.bg_electric p {
+	color: rgb(17, 17, 17);
+}
